@@ -37,7 +37,7 @@
         <TextView
             android:id="@+id/drawer_username"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="wrap_content"=
             android:layout_alignParentLeft="true"
             android:text="User name"
             android:textColor="@color/white"
@@ -63,7 +63,6 @@
             app:srcCompat="@drawable/ic_expand"
             android:background="@drawable/bg_pressable"
             app:tint="@color/white" />
-
     </RelativeLayout>
 
     <LinearLayout
