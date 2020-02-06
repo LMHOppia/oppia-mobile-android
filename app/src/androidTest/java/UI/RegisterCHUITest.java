@@ -18,6 +18,7 @@ import org.junit.runner.RunWith;
 
 import static Utils.ViewsUtils.onEditTextWithinTextInputLayoutWithId;
 import static Utils.ViewsUtils.onErrorViewWithinTextInputLayoutWithId;
+import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -268,6 +269,8 @@ public class RegisterCHUITest {
         onView(withId(R.id.btn_register_ch_next))
                 .perform(click());
 
+        closeSoftKeyboard();
+
         onView(withId(R.id.spinner_districts)).check(matches(not(isEnabled())));
 
         onView(withId(R.id.spinner_counties)).perform(click());
@@ -298,6 +301,8 @@ public class RegisterCHUITest {
 
         onView(withId(R.id.btn_register_perform)).perform(click());
 
+        closeSoftKeyboard();
+
         // Check toast message
         onView(withText(R.string.please_select_county_district))
                 .inRoot(withDecorView(not(is(welcomeActivityTestRule.getActivity().getWindow().getDecorView()))))
@@ -323,6 +328,8 @@ public class RegisterCHUITest {
         enterValidDataStep2();
         onView(withId(R.id.btn_register_ch_next))
                 .perform(click());
+
+        closeSoftKeyboard();
 
         enterValidDataStep3();
 
