@@ -22,6 +22,7 @@ import org.digitalcampus.oppia.model.County;
 import org.digitalcampus.oppia.model.District;
 import org.digitalcampus.oppia.model.User;
 import org.digitalcampus.oppia.utils.ui.ValidableTextInputLayout;
+import org.digitalcampus.oppia.utils.ui.WindowUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,6 +127,8 @@ public class RegisterCHFragment extends AppFragment implements View.OnClickListe
 
     private void updateScreen() {
 
+        WindowUtils.hideSoftKeyboard(getActivity());
+
         viewRegChScreen0.setVisibility(currentScreen == 0 ? View.VISIBLE : View.GONE);
         viewRegChScreen1.setVisibility(currentScreen == 1 ? View.VISIBLE : View.GONE);
         viewRegChScreen2.setVisibility(currentScreen == 2 ? View.VISIBLE : View.GONE);
@@ -133,7 +136,6 @@ public class RegisterCHFragment extends AppFragment implements View.OnClickListe
 
         stepperIndicator.setCurrentStep(currentScreen);
 
-//        btnRegisterChPrevious.setVisibility(currentScreen > 0 ? View.VISIBLE : View.GONE);
         btnRegisterChNext.setVisibility(currentScreen < 2 ? View.VISIBLE : View.GONE);
 
         showRegisterButton(currentScreen == 2);

@@ -11,9 +11,9 @@
         android:layout_height="wrap_content"
         android:background="@color/theme_secondary_light"
         android:paddingLeft="@dimen/padding_large"
-        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingTop="@dimen/padding_medium"
         android:paddingRight="@dimen/padding_large"
-        android:paddingBottom="@dimen/activity_vertical_margin">
+        android:paddingBottom="@dimen/padding_medium">
 
         <com.badoualy.stepperindicator.StepperIndicator
             android:id="@+id/stepper_indicator"
