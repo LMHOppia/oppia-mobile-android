@@ -16,6 +16,7 @@ import androidTestFiles.Utils.MockedApiEndpointTest;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -76,7 +77,7 @@ public class WelcomeUITest extends MockedApiEndpointTest {
 
         onView(withId(R.id.reset_username_field)).perform(typeText("username"));
 
-        onView(withId(R.id.reset_btn)).perform(click());
+        onView(withId(R.id.reset_btn)).perform(closeSoftKeyboard(), scrollTo(), click());
 
         onView(withText(R.string.ok)).perform(click());
 
@@ -98,7 +99,7 @@ public class WelcomeUITest extends MockedApiEndpointTest {
 
         onView(withId(R.id.reset_username_field)).perform(typeText("username"));
 
-        onView(withId(R.id.reset_btn)).perform(click());
+        onView(withId(R.id.reset_btn)).perform(scrollTo(), click());
 
         onView(withText(R.string.close)).perform(click());
 
@@ -120,7 +121,7 @@ public class WelcomeUITest extends MockedApiEndpointTest {
 
         onView(withId(R.id.edit_email)).perform(typeText("valid@email.is"));
 
-        onView(withId(R.id.btn_remember_username)).perform(click());
+        onView(withId(R.id.btn_remember_username)).perform(scrollTo(), click());
 
         onView(withText(R.string.ok)).perform(click());
 
@@ -142,7 +143,7 @@ public class WelcomeUITest extends MockedApiEndpointTest {
 
         onView(withId(R.id.edit_email)).perform(typeText("wrong-email"));
 
-        onView(withId(R.id.btn_remember_username)).perform(click());
+        onView(withId(R.id.btn_remember_username)).perform(scrollTo(), click());
 
         onView(withText(R.string.error_register_email))
                 .check(matches(isDisplayed()));
@@ -161,7 +162,7 @@ public class WelcomeUITest extends MockedApiEndpointTest {
 
         onView(withId(R.id.edit_email)).perform(typeText("valid@email.is"));
 
-        onView(withId(R.id.btn_remember_username)).perform(click());
+        onView(withId(R.id.btn_remember_username)).perform(scrollTo(), click());
 
         onView(withText(R.string.close)).perform(click());
 
