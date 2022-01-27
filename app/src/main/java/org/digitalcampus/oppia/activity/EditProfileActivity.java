@@ -180,7 +180,7 @@ public class EditProfileActivity extends AppActivity implements View.OnClickList
     // Request responses
     @Override
     public void onSubmitComplete(User u) {
-        toast(R.string.profile_updated_successfuly);
+        toast(R.string.profile_updated_successfully);
         finish();
     }
 
