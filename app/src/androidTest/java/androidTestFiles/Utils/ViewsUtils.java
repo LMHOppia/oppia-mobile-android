@@ -30,7 +30,7 @@ import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.is;
 
-import androidTestFiles.Matchers.ToastMatcher;
+import androidTestFiles.Utils.Matchers.ToastMatcher;
 
 public class ViewsUtils {
 
