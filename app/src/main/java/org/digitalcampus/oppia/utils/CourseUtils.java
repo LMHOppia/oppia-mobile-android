@@ -16,6 +16,8 @@ import org.digitalcampus.oppia.model.Course;
 import org.digitalcampus.oppia.model.Lang;
 import org.digitalcampus.oppia.model.responses.CourseServer;
 import org.digitalcampus.oppia.model.responses.CoursesServerResponse;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +28,9 @@ public class CourseUtils {
     /**
      * Utility method to set both sync status (to update or to delete) and course status (draft, live...)
      * based on courses info cache
-     * @param prefs SharedPreferences to get the cache data (passed by parameter to be mockable for tests)
-     * @param courses Installed courses in local database
+     *
+     * @param prefs         SharedPreferences to get the cache data (passed by parameter to be mockable for tests)
+     * @param courses       Installed courses in local database
      * @param fromTimestamp if not null, courses with version timestamp prior to this parameter are ignored
      */
     public static void refreshStatuses(SharedPreferences prefs, List<Course> courses, Double fromTimestamp) {
@@ -162,22 +165,38 @@ public class CourseUtils {
         return false;
     }
 
-    public static void refreshCachedStatus(Context context, Course course) {
-        refreshCachedStatus(context, course, PreferenceManager.getDefaultSharedPreferences(context));
-    }
-
-    public static void refreshCachedStatus(Context context, Course course, SharedPreferences prefs) {
-
+    public static void refreshCachedData(Context context, Course course) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String coursesCachedStr = prefs.getString(PrefsActivity.PREF_SERVER_COURSES_CACHE, null);
         if (coursesCachedStr != null) {
             CoursesServerResponse coursesServerResponse = new Gson().fromJson(
                     coursesCachedStr, CoursesServerResponse.class);
 
-            for (CourseServer courseServer : coursesServerResponse.getCourses()) {
-                if (TextUtils.equals(courseServer.getShortname(), course.getShortname())) {
-                    course.setStatus(courseServer.getStatus());
+            if (coursesServerResponse != null) {
+                for (CourseServer courseServer : coursesServerResponse.getCourses()) {
+                    if (TextUtils.equals(courseServer.getShortname(), course.getShortname())) {
+                        refreshCachedStatus(course, courseServer.getStatus());
+                        refreshCachedCohorts(course, courseServer.isRestricted(), courseServer.getRestrictedCohorts());
+                    }
                 }
             }
         }
+    }
+
+    private static void refreshCachedStatus(Course course, String newStatus) {
+        course.setStatus(newStatus);
+    }
+
+    private static void refreshCachedCohorts(Course course, boolean isRestricted, List<Integer> cohorts) {
+        course.setRestricted(isRestricted);
+        course.setRestrictedCohorts(cohorts);
+    }
+
+    public static List<Integer> parseCourseCohortsFromJSONArray(JSONArray cohortsJson) throws JSONException {
+        List<Integer> cohorts = new ArrayList<>();
+        for (int i = 0; i < cohortsJson.length(); i++) {
+            cohorts.add(cohortsJson.getInt(i));
+        }
+        return cohorts;
     }
 }
