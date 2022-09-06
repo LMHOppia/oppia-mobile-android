@@ -35,8 +35,8 @@ import com.google.android.material.tabs.TabLayout;
 import org.digitalcampus.mobile.learning.R;
 import org.digitalcampus.mobile.learning.databinding.ActivityWelcomeBinding;
 import org.digitalcampus.oppia.adapter.ActivityPagerAdapter;
-import org.digitalcampus.oppia.analytics.Analytics;
 import org.digitalcampus.oppia.analytics.AnalyticsProvider;
+import org.digitalcampus.oppia.api.ApiEndpoint;
 import org.digitalcampus.oppia.application.AdminSecurityManager;
 import org.digitalcampus.oppia.application.SessionManager;
 import org.digitalcampus.oppia.fragments.LoginFragment;
@@ -45,6 +45,7 @@ import org.digitalcampus.oppia.fragments.RememberUsernameFragment;
 import org.digitalcampus.oppia.fragments.ResetPasswordFragment;
 import org.digitalcampus.oppia.fragments.WelcomeFragment;
 import org.digitalcampus.oppia.model.User;
+import org.digitalcampus.oppia.task.UpdateUserCohortsTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,6 +76,9 @@ public class WelcomeActivity extends AppActivity {
 
     @Inject
     AnalyticsProvider analyticsProvider;
+
+    @Inject
+    ApiEndpoint apiEndpoint;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -185,6 +189,8 @@ public class WelcomeActivity extends AppActivity {
             overridePendingTransition(0, 0);
             startActivity(new Intent(this, AnalyticsOptinActivity.class));
         }
+
+        new UpdateUserCohortsTask().updateLoggedUserCohorts(this, apiEndpoint, user);
 
         finish();
     }
