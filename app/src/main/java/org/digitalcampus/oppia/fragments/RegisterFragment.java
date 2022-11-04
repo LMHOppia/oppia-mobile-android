@@ -1,16 +1,16 @@
-/* 
+/*
  * This file is part of OppiaMobile - https://digital-campus.org/
- * 
+ *
  * OppiaMobile is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * OppiaMobile is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with OppiaMobile. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -68,7 +68,7 @@ public class RegisterFragment extends AppFragment implements RegisterTask.Regist
 
 
 	public static RegisterFragment newInstance() {
-	    return new RegisterFragment();
+		return new RegisterFragment();
 	}
 
 	public RegisterFragment(){
@@ -197,16 +197,6 @@ public class RegisterFragment extends AppFragment implements RegisterTask.Regist
 
 	}
 
-	public boolean goBack(){
-		if (binding.prevBtn.getVisibility() == View.INVISIBLE){
-			return false;
-		}
-		else {
-			prevStep();
-			return true;
-		}
-	}
-
 	private void prevStep(){
 
 		UIUtils.hideSoftKeyboard(getActivity());
@@ -236,27 +226,19 @@ public class RegisterFragment extends AppFragment implements RegisterTask.Regist
 		}
 
 		if (valid){
-            User u = new User();
-            u.setUsername(binding.registerFormUsernameField.getCleanedValue());
-            u.setPassword(binding.registerFormPasswordField.getCleanedValue());
-            u.setPasswordAgain(binding.registerFormPasswordAgainField.getCleanedValue());
-            u.setFirstname(binding.registerFormFirstnameField.getCleanedValue());
-            u.setLastname(binding.registerFormLastnameField.getCleanedValue());
-            u.setEmail(binding.registerFormEmailField.getCleanedValue());
-            u.setJobTitle(binding.registerFormJobtitleField.getCleanedValue());
-            u.setOrganisation(binding.registerFormOrganisationField.getCleanedValue());
-            u.setPhoneNo(binding.ccp.getFormattedFullNumber());
+			User u = new User();
+			u.setUsername(binding.registerFormUsernameField.getCleanedValue());
+			u.setPassword(binding.registerFormPasswordField.getCleanedValue());
+			u.setPasswordAgain(binding.registerFormPasswordAgainField.getCleanedValue());
+			u.setFirstname(binding.registerFormFirstnameField.getCleanedValue());
+			u.setLastname(binding.registerFormLastnameField.getCleanedValue());
+			u.setEmail(binding.registerFormEmailField.getCleanedValue());
+			u.setJobTitle(binding.registerFormJobtitleField.getCleanedValue());
+			u.setOrganisation(binding.registerFormOrganisationField.getCleanedValue());
+			u.setPhoneNo(binding.ccp.getFormattedFullNumber());
 			u.setUserCustomFields(fieldsManager.getCustomFieldValues());
-
-			if (TextUtils.equals(u.getRole(), "other")){
-				u.setUsername(binding.registerFormUsernameField.getCleanedValue());
-			}
-			else{
-				u.autogenerateUsername();
-			}
-
-            executeRegisterTask(u);
-        }
+			executeRegisterTask(u);
+		}
 
 	}
 
