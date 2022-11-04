@@ -59,11 +59,10 @@ public class User {
 	private boolean offlineRegister = false;
 	private List<Integer> cohorts = new ArrayList<>();
 
-	public static final String CUSTOM_FIELD_EMPLOYEE_ID = "employee_id";
-	public static final String CUSTOM_FIELD_ROLE = "role";
-
 	private Map<String, CustomValue> userCustomFields = new HashMap<>();
-	
+
+	private boolean localUser;
+
 	public String getUsername() {
 		return username;
 	}
@@ -188,27 +187,16 @@ public class User {
 		this.offlineRegister = offlineRegister;
 	}
 
+	public Map<String, CustomValue> getUserCustomFields() {
+		return userCustomFields;
+	}
+
 	public CustomValue getCustomField(String key){
 		return userCustomFields.get(key);
 	}
 
 	public void putCustomField(String key, CustomValue value){
 		userCustomFields.put(key, value);
-	}
-
-	public String getEmployeeID() {
-		return getCustomField(CUSTOM_FIELD_EMPLOYEE_ID) != null ? (String) getCustomField(CUSTOM_FIELD_EMPLOYEE_ID).getValue() : null;
-	}
-
-	public String getRole(){
-		return getCustomField(CUSTOM_FIELD_ROLE) != null ? (String) getCustomField(CUSTOM_FIELD_ROLE).getValue() :  null;
-	}
-	public void autogenerateUsername() {
-		this.username = (getFirstname() + getLastname() + getEmployeeID()).replace(" ", "").toLowerCase();
-	}
-
-	public Map<String, CustomValue> getUserCustomFields() {
-		return userCustomFields;
 	}
 
 	public void setUserCustomFields(Map<String, CustomValue> userCustomFields) {
@@ -231,4 +219,11 @@ public class User {
 		return this.cohorts;
 	}
 
+	public boolean isLocalUser() {
+		return localUser;
+	}
+
+	public void setLocalUser(boolean localUser) {
+		this.localUser = localUser;
+	}
 }

@@ -1,16 +1,16 @@
-/* 
+/*
  * This file is part of OppiaMobile - https://digital-campus.org/
- * 
+ *
  * OppiaMobile is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * OppiaMobile is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with OppiaMobile. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -19,7 +19,6 @@ package org.digitalcampus.oppia.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +40,7 @@ import org.digitalcampus.oppia.model.CustomField;
 import org.digitalcampus.oppia.model.CustomFieldsRepository;
 import org.digitalcampus.oppia.model.User;
 import org.digitalcampus.oppia.task.RegisterTask;
+import org.digitalcampus.oppia.utils.TextUtilsJava;
 import org.digitalcampus.oppia.utils.UIUtils;
 import org.digitalcampus.oppia.utils.ui.fields.CustomFieldsUIManager;
 import org.digitalcampus.oppia.utils.ui.fields.SteppedFormUIManager;
@@ -68,7 +68,7 @@ public class RegisterFragment extends AppFragment implements RegisterTask.Regist
 
 
 	public static RegisterFragment newInstance() {
-	    return new RegisterFragment();
+		return new RegisterFragment();
 	}
 
 	public RegisterFragment(){
@@ -81,7 +81,7 @@ public class RegisterFragment extends AppFragment implements RegisterTask.Regist
 
 		binding.registerFormEmailField.setCustomValidator(field -> {
 			String email = field.getCleanedValue();
-			if (!TextUtils.isEmpty(email) && !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+			if (!TextUtilsJava.isEmpty(email) && !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
 				binding.registerFormEmailField.setErrorEnabled(true);
 				binding.registerFormEmailField.setError(getString(R.string.error_register_email));
 				return false;
@@ -112,7 +112,7 @@ public class RegisterFragment extends AppFragment implements RegisterTask.Regist
 		});
 
 		binding.registerFormUsernameField.setCustomValidator(field -> {
-			boolean validValue = !TextUtils.isEmpty(field.getCleanedValue()) && field.getCleanedValue().length() >= App.USERNAME_MIN_CHARACTERS;
+			boolean validValue = !TextUtilsJava.isEmpty(field.getCleanedValue()) && field.getCleanedValue().length() >= App.USERNAME_MIN_CHARACTERS;
 			if (!validValue) {
 				binding.registerFormUsernameField.setError(getString(R.string.error_register_username_length, App.USERNAME_MIN_CHARACTERS));
 			}
@@ -197,16 +197,6 @@ public class RegisterFragment extends AppFragment implements RegisterTask.Regist
 
 	}
 
-	public boolean goBack(){
-		if (binding.prevBtn.getVisibility() == View.INVISIBLE){
-			return false;
-		}
-		else {
-			prevStep();
-			return true;
-		}
-	}
-
 	private void prevStep(){
 
 		UIUtils.hideSoftKeyboard(getActivity());
@@ -236,27 +226,19 @@ public class RegisterFragment extends AppFragment implements RegisterTask.Regist
 		}
 
 		if (valid){
-            User u = new User();
-            u.setUsername(binding.registerFormUsernameField.getCleanedValue());
-            u.setPassword(binding.registerFormPasswordField.getCleanedValue());
-            u.setPasswordAgain(binding.registerFormPasswordAgainField.getCleanedValue());
-            u.setFirstname(binding.registerFormFirstnameField.getCleanedValue());
-            u.setLastname(binding.registerFormLastnameField.getCleanedValue());
-            u.setEmail(binding.registerFormEmailField.getCleanedValue());
-            u.setJobTitle(binding.registerFormJobtitleField.getCleanedValue());
-            u.setOrganisation(binding.registerFormOrganisationField.getCleanedValue());
-            u.setPhoneNo(binding.ccp.getFormattedFullNumber());
+			User u = new User();
+			u.setUsername(binding.registerFormUsernameField.getCleanedValue());
+			u.setPassword(binding.registerFormPasswordField.getCleanedValue());
+			u.setPasswordAgain(binding.registerFormPasswordAgainField.getCleanedValue());
+			u.setFirstname(binding.registerFormFirstnameField.getCleanedValue());
+			u.setLastname(binding.registerFormLastnameField.getCleanedValue());
+			u.setEmail(binding.registerFormEmailField.getCleanedValue());
+			u.setJobTitle(binding.registerFormJobtitleField.getCleanedValue());
+			u.setOrganisation(binding.registerFormOrganisationField.getCleanedValue());
+			u.setPhoneNo(binding.ccp.getFormattedFullNumber());
 			u.setUserCustomFields(fieldsManager.getCustomFieldValues());
-
-			if (TextUtils.equals(u.getRole(), "other")){
-				u.setUsername(binding.registerFormUsernameField.getCleanedValue());
-			}
-			else{
-				u.autogenerateUsername();
-			}
-
-            executeRegisterTask(u);
-        }
+			executeRegisterTask(u);
+		}
 
 	}
 
@@ -285,7 +267,7 @@ public class RegisterFragment extends AppFragment implements RegisterTask.Regist
 		//Save the search tracker
 		new Tracker(super.getActivity()).saveRegisterTracker();
 
-		((WelcomeActivity) getActivity()).onSuccessUserAccess(registeredUser);
+		((WelcomeActivity) getActivity()).onSuccessUserAccess(registeredUser, false);
 
 	}
 
