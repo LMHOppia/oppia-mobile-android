@@ -45,7 +45,7 @@ import org.digitalcampus.oppia.fragments.RememberUsernameFragment;
 import org.digitalcampus.oppia.fragments.ResetPasswordFragment;
 import org.digitalcampus.oppia.fragments.WelcomeFragment;
 import org.digitalcampus.oppia.model.User;
-import org.digitalcampus.oppia.task.UpdateUserCohortsTask;
+import org.digitalcampus.oppia.task.FetchUserTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -192,7 +192,7 @@ public class WelcomeActivity extends AppActivity {
             startActivity(new Intent(this, AnalyticsOptinActivity.class));
         }
 
-        new UpdateUserCohortsTask().updateLoggedUserCohorts(this, apiEndpoint, user);
+        new FetchUserTask().updateLoggedUserProfile(this, apiEndpoint, user);
 
         finish();
     }
