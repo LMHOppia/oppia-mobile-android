@@ -8,8 +8,8 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 
-def version_code = 112
-def version_name = "7.4.7-lb.1-int"
+def version_code = 113
+def version_name = "7.4.8-lb.1-int"
 
 android {
 
@@ -24,7 +24,7 @@ android {
         logger.error('No properties file found. Using default values.')
     }
 
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         versionCode version_code
@@ -33,7 +33,7 @@ android {
         applicationId "org.lastmilehealth.oppiamobile"
 
         minSdk 21
-        targetSdk 33
+        targetSdk 34
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         // The following argument makes the Android Test Orchestrator run its
